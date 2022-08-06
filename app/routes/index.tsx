@@ -79,7 +79,7 @@ export default function Index() {
   const [articles, setArticles] = useState<any>()
   useEffect(() => {
     (async () => {
-      let res = await fetch('https://fml233.cn/Articles')
+      let res = await fetch('https://fml233.cn:8443/Articles')
       let data = await res.json()
       console.log(data)
       setArticles(data)
