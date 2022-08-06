@@ -255,6 +255,7 @@ export async function bootstrap_track(trackId: string) {
     let res = await fetch(target_url + new URLSearchParams(params), {
         headers: {
             Referer: 'https://y.qq.com/',
+            host: 'y.qq.com',
         },
     })
     let data: any = await res.json()
