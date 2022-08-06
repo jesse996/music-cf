@@ -76,8 +76,20 @@ export default function Index() {
     }
   }, [allColl.size, searchParams, setSearchParams])
 
+  const [articles, setArticles] = useState<any>()
+  useEffect(() => {
+    (async () => {
+      let res = await fetch('https://fml233.cn/Articles')
+      let data = await res.json()
+      console.log(data)
+      setArticles(data)
+    })()
+  }, [])
+
   return (
     <div className="w-4/5 mx-auto mt-10">
+      <div>articles:</div>
+      {JSON.stringify(articles)}
       <div className="flex space-x-2">
         {recommend.map(({ id, name }) => (
           <button key={id} className='btn' onClick={() => {
