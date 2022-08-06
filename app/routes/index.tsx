@@ -10,7 +10,8 @@ import { get_playlist_filters } from "~/api/qq";
 
 interface IProps {
   playlistFilters: IPlaylistFilters,
-  collection: ICollection[]
+  collection: ICollection[],
+  article: any[]
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -23,11 +24,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   //歌单
   let collection = (await show_playlist(offset, filterId)) || []
 
-  return json<IProps>({ playlistFilters, collection })
+  let res = await fetch('https://fml233.cn:8443/Article')
+  let article: any[] = await res.json()
+
+  return json<IProps>({ playlistFilters, collection, article });
 }
 
 export default function Index() {
-  const { playlistFilters, collection } = useLoaderData<IProps>();
+  const { playlistFilters, collection, article } = useLoaderData<IProps>();
   let { recommend, all } = playlistFilters;
   const [allColl, setAllColl] = useState<Set<ICollection>>(new Set())
   const param = useLocation()
@@ -76,20 +80,11 @@ export default function Index() {
     }
   }, [allColl.size, searchParams, setSearchParams])
 
-  const [articles, setArticles] = useState<any>()
-  useEffect(() => {
-    (async () => {
-      let res = await fetch('https://fml233.cn:8443/Articles')
-      let data = await res.json()
-      console.log(data)
-      setArticles(data)
-    })()
-  }, [])
 
   return (
     <div className="w-4/5 mx-auto mt-10">
       <div>articles:</div>
-      {JSON.stringify(articles)}
+      {JSON.stringify(article)}
       <div className="flex space-x-2">
         {recommend.map(({ id, name }) => (
           <button key={id} className='btn' onClick={() => {
