@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   //歌单
   let collection = (await show_playlist(offset, filterId)) || []
 
-  let res = await fetch('https://fml233.cn:8443/Article')
+  let res = await fetch('http://fml233.cn:9080/Article')
   let article: any[] = await res.json()
 
   return json<IProps>({ playlistFilters, collection, article });
