@@ -48,6 +48,8 @@ interface IPlayList {
 export default function PlayList() {
   let { playlist, collId, songDetail } = useLoaderData()
   const [searchParam, setSearchParam] = useSearchParams()
+  console.log('songdetail', songDetail)
+
 
   let { info, tracks } = playlist as IPlayList
   const [currentSongIndex, setCurrentSongIndex] = useState(0)
@@ -55,7 +57,6 @@ export default function PlayList() {
     let sid = searchParam.get('songId')
     if (sid) {
       let index = tracks.findIndex(item => item.id === sid)
-      console.log(tracks[index])
       setCurrentSongIndex(index)
     }
   }, [currentSongIndex, searchParam, tracks])
@@ -128,9 +129,6 @@ export default function PlayList() {
       let index = tracks.findIndex((i: ITrack, index: number) =>
         i.id === searchParam.get('songId')
       )
-      console.log('searchParam', searchParam.toString())
-      console.log('index', index)
-
       searchParam.delete('songId')
       setSearchParam({ songId: tracks[index + 1].id, collId })
     }}

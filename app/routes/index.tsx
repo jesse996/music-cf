@@ -59,7 +59,6 @@ export default function Index() {
         console.log("触底了:",)
         // this.getData()
         // createSearchParams
-        console.log('searchparm', searchParams.toString());
 
         searchParams.delete('offset')
         let param = new URLSearchParams([
